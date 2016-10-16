@@ -1,6 +1,8 @@
 [Plotter-Shell-Model](https://github.com/datumgeek/plotter-shell-model/)
 ====================
 
+[![Join the chat at https://gitter.im/misc-tech/a2dyn](https://badges.gitter.im/misc-tech/Lobby.svg)](https://gitter.im/misc-tech/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [This projects supports UMD (Universal Module Definition)](https://github.com/umdjs/umd)
 
 ![plotter-shell-model downloads](https://nodei.co/npm-dl/plotter-shell-model.png)
@@ -54,6 +56,6 @@ Contact
 
 @datumgeek - at the following gitter channel
 
-[![Join the chat at https://gitter.im/misc-tech/a2dyn](https://badges.gitter.im/misc-tech/a2dyn.svg)](https://gitter.im/misc-tech/a2dyn?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/misc-tech/a2dyn](https://badges.gitter.im/misc-tech/Lobby.svg)](https://gitter.im/misc-tech/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Project structure is based on the excellent [typescript-collections](https://github.com/basarat/typescript-collections)
