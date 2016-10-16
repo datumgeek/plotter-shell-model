@@ -1,6 +1,6 @@
 {
     "name": "plotter-shell-model",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "models for plotter shell configuration.",
     "main": "./dist/lib/umd.js",
     "jsnext:main": "dist/lib/index.js",
