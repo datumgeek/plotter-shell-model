@@ -7,6 +7,7 @@ export class View {
         view.uniqueId = json.uniqueId;
         view.pane = json.pane;
         view.moduleUrl = json.moduleUrl;
+        view.baseUriName = json.baseUriName;
         return view;
     }
 
@@ -14,6 +15,7 @@ export class View {
     public uniqueId: string;
     public pane: PaneType;
     public moduleUrl: string;
+    public baseUriName: string;
     public pak: Pak;
 }
 
@@ -24,4 +26,5 @@ export interface ViewJSON {
     uniqueId: string;
     pane: PaneType;
     moduleUrl: string;
+    baseUriName: string;
 }

@@ -1,6 +1,6 @@
-import { PakDirectory } from '../pak/pak-directory';
-import { StateSession, StateSessionJSON } from './state-session';
-import { StateDirectory } from './state-directory';
+import { PakDirectory } from '../pak/pakDirectory';
+import { StateSession, StateSessionJSON } from './stateSession';
+import { StateDirectory } from './stateDirectory';
 
 export interface StateRepository {
     locked: boolean;

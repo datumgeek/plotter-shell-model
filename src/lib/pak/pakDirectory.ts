@@ -1,12 +1,12 @@
-import { HttpClient } from 'aurelia-fetch-client';
-import { PakRepository, PakRepositoryJSON } from './pak-repository';
-import { PakRepositoryFile } from './pak-repository-file';
-import { StateRepository } from '../state/state-repository';
-import { ElectronHelper } from '../electron-helper';
-import { PhoneGapHelper } from '../phone-gap-helper';
+import { PakRepository, PakRepositoryJSON } from './pakRepository';
+import { PakRepositoryFile } from './pakRepositoryFile';
+import { StateRepository } from '../state/stateRepository';
+import { ElectronHelper } from '../electronHelper';
+import { PhoneGapHelper } from '../phoneGapHelper';
+import { IFileManager } from '../util';
 
 export class PakDirectory {
-    public static fromJSON(json: PakDirectoryJSON): PakDirectory {
+    public static fromJSON(fileManager: IFileManager, json: PakDirectoryJSON): PakDirectory {
         let pakDirectory = new PakDirectory();
         // assign properties...
         pakDirectory.locked = json.locked;
@@ -14,18 +14,16 @@ export class PakDirectory {
         pakDirectory.pakRepositories = json.pakRepositories.map(pakRepositoryJSON => {
             switch (pakRepositoryJSON.pakRepositoryType) {
                 case 'File':
-                    {
-                        let pakRepository = new PakRepositoryFile(
-                            new HttpClient(),
-                            new ElectronHelper(),
-                            new PhoneGapHelper());
-                        pakRepository.locked = pakRepositoryJSON.locked;
-                        pakRepository.uniqueId = pakRepositoryJSON.uniqueId;
-                        pakRepository.pakRepositoryType = pakRepositoryJSON.pakRepositoryType;
-                        pakRepository.path = pakRepositoryJSON.path;
-                        pakRepository.pakDirectory = pakDirectory;
-                        return pakRepository;
-                    }
+                    let pakRepository = new PakRepositoryFile(
+                        fileManager,
+                        new ElectronHelper(),
+                        new PhoneGapHelper());
+                    pakRepository.locked = pakRepositoryJSON.locked;
+                    pakRepository.uniqueId = pakRepositoryJSON.uniqueId;
+                    pakRepository.pakRepositoryType = pakRepositoryJSON.pakRepositoryType;
+                    pakRepository.path = pakRepositoryJSON.path;
+                    pakRepository.pakDirectory = pakDirectory;
+                    return pakRepository;
 
                 default:
                     throw new Error(`repository ${pakRepositoryJSON.pakRepositoryType} not supported.`);

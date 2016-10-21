@@ -1,12 +1,12 @@
-import { HttpClient } from 'aurelia-fetch-client';
-import { StateRepository, StateRepositoryJSON  } from './stateRepository';
+import { StateRepository, StateRepositoryJSON } from './stateRepository';
 import { StateRepositoryFile } from './stateRepositoryFile';
 import { ElectronHelper } from '../electronHelper';
 import { PhoneGapHelper } from '../phoneGapHelper';
 import { StateSession } from './stateSession';
+import { IFileManager } from '../util';
 
 export class StateDirectory {
-    public static fromJSON(json: StateDirectoryJSON): StateDirectory {
+    public static fromJSON(fileManager: IFileManager, json: StateDirectoryJSON): StateDirectory {
         let stateDirectory = new StateDirectory();
         // assign properties...
         stateDirectory.locked = json.locked;
@@ -14,9 +14,8 @@ export class StateDirectory {
         stateDirectory.stateRepositories = json.stateRepositories.map(stateRepositoryJSON => {
             switch (stateRepositoryJSON.stateRepositoryType) {
                 case 'File':
-                {
                     let stateRepository = new StateRepositoryFile(
-                        new HttpClient(),
+                        fileManager,
                         new ElectronHelper(),
                         new PhoneGapHelper());
                     stateRepository.locked = stateRepositoryJSON.locked;
@@ -25,7 +24,6 @@ export class StateDirectory {
                     stateRepository.path = stateRepositoryJSON.path;
                     stateRepository.stateDirectory = stateDirectory;
                     return stateRepository;
-                }
 
                 default:
                     throw new Error(`repository ${stateRepositoryJSON.stateRepositoryType} not supported.`);
@@ -45,7 +43,7 @@ export class StateDirectory {
             return this.stateRepositories[0];
         }
 
-        let repoMatch = null;
+        let repoMatch: any = null;
         this.stateRepositories.some(repo => {
             if (repo.uniqueId === uniqueId) {
                 repoMatch = repo;

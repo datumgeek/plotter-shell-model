@@ -19,8 +19,8 @@ export class PhoneGapHelper {
         return new Promise<Object>((resolve, reject) => {
             let pathToFile = `${this.baseUrl}${fileName}`;
 
-            (<any>window).resolveLocalFileSystemURL(pathToFile, function (fileEntry) {
-                fileEntry.file(function (file) {
+            (<any>window).resolveLocalFileSystemURL(pathToFile, function (fileEntry: any) {
+                fileEntry.file(function (file: any) {
                     let reader = new FileReader();
 
                     reader.onloadend = function (e) {
@@ -28,12 +28,12 @@ export class PhoneGapHelper {
                     };
 
                     reader.readAsText(file);
-                }, (reason) => {
+                }, (reason: any) => {
                     reject(
                         new Error(
                             `fileEntry.file Failed.  ${that.errorHandler(fileName, reason)} Reason: ${JSON.stringify(reason)}`));
                 });
-            }, (reason) => {
+            }, (reason: any) => {
                 reject(
                     new Error(
                         `resolveLocalFileSystemURL Failed.  ${that.errorHandler(fileName, reason)} Reason: ${JSON.stringify(reason)}`));
@@ -41,7 +41,7 @@ export class PhoneGapHelper {
         });
     };
 
-    public errorHandler = (fileName, e) => {
+    public errorHandler = (fileName: any, e: any) => {
         let msg = '';
 
         switch (e.code) {

@@ -3,6 +3,7 @@ import { Pak } from './pak';
 import { PakDirectory } from './pakDirectory';
 import { ElectronHelper } from '../electronHelper';
 import { PhoneGapHelper } from '../phoneGapHelper';
+import { IFileManager } from '../util';
 
 export class PakRepositoryFile implements PakRepository {
     public locked = false;
@@ -16,11 +17,11 @@ export class PakRepositoryFile implements PakRepository {
     private pakPromiseMap = new Map<string, Promise<Pak>>();
 
     constructor(
-        private httpClient: HttpClient,
+        private fileManager: IFileManager,
         private electronHelper: ElectronHelper,
         private phoneGapHelper: PhoneGapHelper) { }
 
-    public getPak = (pakId): Promise<Pak> => {
+    public getPak = (pakId: any): Promise<Pak> => {
 
         if (this.pakPromiseMap.has(pakId)) {
             return this.pakPromiseMap.get(pakId);
@@ -33,7 +34,7 @@ export class PakRepositoryFile implements PakRepository {
                 let fs = that.electronHelper.fs;
                 let resourcePath = that.electronHelper.userDataPath;
 
-                fs.readFile(`${resourcePath}/${that.path}/${that.uniqueId}/${pakId}.json`, (reason, stringData) => {
+                fs.readFile(`${resourcePath}/${that.path}/${that.uniqueId}/${pakId}.json`, (reason: any, stringData: string) => {
                     if (reason) {
                         reject(new Error(`fetch pak failed: reason: \r\n\r\n${reason}`));
                         return;
@@ -60,9 +61,9 @@ export class PakRepositoryFile implements PakRepository {
                     .catch(r => reject(r));
             } else {
 
-                that.httpClient.fetch(`${that.path}/${that.uniqueId}/${pakId}.json`)
+                that.fileManager.get([that.path, that.uniqueId, `${pakId}.json`])
                     .then(response => {
-                        return response.json();
+                        return JSON.parse(response);
                     })
                     .then(data => {
                         let pak = Pak.fromJSON(data);
@@ -88,7 +89,7 @@ export class PakRepositoryFile implements PakRepository {
                 let fs = that.electronHelper.fs;
                 let resourcePath = that.electronHelper.userDataPath;
 
-                fs.readFile(`${resourcePath}/${that.path}/${that.uniqueId}/pak-list.json`, (reason, stringData) => {
+                fs.readFile(`${resourcePath}/${that.path}/${that.uniqueId}/pak-list.json`, (reason: any, stringData: string) => {
                     if (reason) {
                         reject(new Error(`fetch pak list failed: reason: \r\n\r\n${reason}`));
                         return;
@@ -111,9 +112,9 @@ export class PakRepositoryFile implements PakRepository {
                     .catch(r => reject(r));
             } else {
 
-                that.httpClient.fetch(`${that.path}/${that.uniqueId}/pak-list.json`)
+                that.fileManager.get([that.path, that.uniqueId, 'pak-list.json'])
                     .then(response => {
-                        return response.json();
+                        return JSON.parse(response);
                     })
                     .then(data => {
                         that.pakList = data.pakList;
