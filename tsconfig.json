@@ -1,7 +1,12 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "lib": [
+            "es6",
+            "dom"
+        ],
         "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "es5",
         "declaration": true,
         "noImplicitAny": true,
         "removeComments": false,
