@@ -3,6 +3,6 @@ export function noOp(): boolean {
 }
 
 export interface IFileManager {
-    get(segments: string[]): Promise<string>;
-    set(segments: string[], content: string): Promise<boolean>;
+    get(segments: string[]): Promise<Object>;
+    set(segments: string[], content: Object): Promise<boolean>;
 }

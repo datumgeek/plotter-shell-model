@@ -1,4 +1,4 @@
-import { StateDirectory } from './state/stateDirectory';
+import { StateDirectory, StateDirectoryJSON } from './state/stateDirectory';
 import { StateRepository } from './state/stateRepository';
 import { StateSession } from './state/stateSession';
 import { IFileManager } from './util';
@@ -60,11 +60,8 @@ export class PlotterShellModel {
                                 .catch(r => reject(r));
                         } else {
                             that.fileManager.get([`${sdn}.json`])
-                                .then(response => {
-                                    return JSON.parse(response);
-                                })
                                 .then(data => {
-                                    let stateDirectory = StateDirectory.fromJSON(that.fileManager, data);
+                                    let stateDirectory = StateDirectory.fromJSON(that.fileManager, <StateDirectoryJSON>data);
                                     that.stateDirectory = stateDirectory;
                                     resolve(stateDirectory);
                                 })
