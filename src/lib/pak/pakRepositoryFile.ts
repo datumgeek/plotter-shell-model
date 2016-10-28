@@ -1,5 +1,5 @@
 import { PakRepository, PakRepositoryType } from './pakRepository';
-import { Pak } from './pak';
+import { Pak, PakJSON } from './pak';
 import { PakDirectory } from './pakDirectory';
 import { ElectronHelper } from '../electronHelper';
 import { PhoneGapHelper } from '../phoneGapHelper';
@@ -62,11 +62,8 @@ export class PakRepositoryFile implements PakRepository {
             } else {
 
                 that.fileManager.get([that.path, that.uniqueId, `${pakId}.json`])
-                    .then(response => {
-                        return JSON.parse(response);
-                    })
                     .then(data => {
-                        let pak = Pak.fromJSON(data);
+                        let pak = Pak.fromJSON(<PakJSON>data);
                         pak.pakRepository = that;
                         that.pakMap.set(pakId, pak);
                         resolve(pak);
@@ -113,12 +110,9 @@ export class PakRepositoryFile implements PakRepository {
             } else {
 
                 that.fileManager.get([that.path, that.uniqueId, 'pak-list.json'])
-                    .then(response => {
-                        return JSON.parse(response);
-                    })
                     .then(data => {
-                        that.pakList = data.pakList;
-                        resolve(<string[]>data.pakList);
+                        that.pakList = (<PakRepository>data).pakList;
+                        resolve(that.pakList);
                     })
                     .catch(reason => {
                         reject(new Error(`fetch pak list failed: reason: \r\n\r\n${reason}`));

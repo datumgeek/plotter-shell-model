@@ -1,7 +1,7 @@
 import { StateRepository, StateRepositoryType, StateRepositoryJSON } from './stateRepository';
-import { PakDirectory } from '../pak/pakDirectory';
-import { StateSession } from './stateSession';
-import { StateDirectory } from './stateDirectory';
+import { PakDirectory, PakDirectoryJSON } from '../pak/pakDirectory';
+import { StateSession, StateSessionJSON } from './stateSession';
+import { StateDirectory, StateDirectoryJSON } from './stateDirectory';
 import { ElectronHelper } from '../electronHelper';
 import { PhoneGapHelper } from '../phoneGapHelper';
 import { IFileManager } from '../util';
@@ -72,10 +72,7 @@ export class StateRepositoryFile implements StateRepository {
             } else {
 
                 that.fileManager.get([that.path, that.uniqueId, 'pak-directory.json'])
-                    .then(response => {
-                        return JSON.parse(response);
-                    })
-                    .then(data => {
+                    .then((data: PakDirectoryJSON) => {
                         let pakDirectory = PakDirectory.fromJSON(that.fileManager, data);
                         pakDirectory.stateRepository = that;
                         resolve(pakDirectory);
@@ -129,10 +126,7 @@ export class StateRepositoryFile implements StateRepository {
             } else {
 
                 that.fileManager.get([that.path, that.uniqueId, `${sessionId}.json`])
-                    .then(response => {
-                        return JSON.parse(response);
-                    })
-                    .then(data => {
+                    .then((data: StateSessionJSON) => {
                         let stateSession = StateSession.fromJSON(data);
                         stateSession.stateRepository = that;
                         that.stateSessionMap.set(sessionId, stateSession);
@@ -178,11 +172,8 @@ export class StateRepositoryFile implements StateRepository {
             } else {
 
                 that.fileManager.get([that.path, that.uniqueId, 'session-list.json'])
-                    .then(response => {
-                        return JSON.parse(response);
-                    })
-                    .then(data => {
-                        resolve(<string[]>data.sessionList);
+                    .then((data: { sessionList: string[]}) => {
+                        resolve(data.sessionList);
                     })
                     .catch(reason => {
                         reject(new Error(`fetch session list: reason: \r\n\r\n${reason}`));
