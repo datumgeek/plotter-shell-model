@@ -10,12 +10,14 @@ export class PlotterShellModel {
     public electronHelper = new ElectronHelper();
     public phoneGapHelper = new PhoneGapHelper();
 
+    public started: Promise<StateDirectory>;
+
     constructor(public fileManager: IFileManager) {}
 
     public start(): Promise<StateDirectory> {
         let that = this;
 
-        return new Promise<StateDirectory>((resolve, reject) => {
+        this.started = new Promise<StateDirectory>((resolve, reject) => {
 
             let sdn = that.stateDirectoryName;
 
@@ -75,6 +77,8 @@ export class PlotterShellModel {
                         }
                     }
         });
+
+        return this.started;
     }
 
     public stateDirectoryName: string = 'state-directory';
