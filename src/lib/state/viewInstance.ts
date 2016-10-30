@@ -11,9 +11,9 @@ export class ViewInstance {
             viewInstance.title = json.title;
         }
         viewInstance.viewId = json.viewId;
-        viewInstance.viewTemplate = json.viewTemplate;
-        viewInstance.viewModel = json.viewModel;
-        viewInstance.viewState = json.viewState;
+        viewInstance.cmodule = json.cmodule;
+        viewInstance.component = json.component;
+        viewInstance.state = json.state;
         viewInstance.paneType = json.paneType;
         return viewInstance;
     }
@@ -22,9 +22,9 @@ export class ViewInstance {
     public title: string;
     public viewId: string;
     public paneType: PaneType;
-    public viewTemplate: string;
-    public viewModel: string;
-    public viewState: Object;
+    public cmodule: string;
+    public component: string;
+    public state: Object;
     public activePak: ActivePak;
     public view: View;
 
@@ -60,7 +60,7 @@ export interface ViewInstanceJSON {
     title?: string;
     viewId?: string;
     paneType: PaneType;
-    viewTemplate?: string;
-    viewModel?: string;
-    viewState?: Object;
+    cmodule?: string;
+    component?: string;
+    state?: Object;
 }
