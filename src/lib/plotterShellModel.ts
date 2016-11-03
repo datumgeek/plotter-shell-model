@@ -14,7 +14,7 @@ export class PlotterShellModel {
 
     constructor(public fileManager: IFileManager) {}
 
-    public start(): Promise<StateDirectory> {
+    public start(baseUrl?:string): Promise<StateDirectory> {
         let that = this;
 
         this.started = new Promise<StateDirectory>((resolve, reject) => {
@@ -61,7 +61,12 @@ export class PlotterShellModel {
                                 })
                                 .catch(r => reject(r));
                         } else {
-                            that.fileManager.get([`${sdn}.json`])
+                            let segments: string[] = [];
+                            if (baseUrl) {
+                                segments.push(baseUrl);
+                            }
+                            segments.push(`${sdn}.json`)
+                            that.fileManager.get(segments)
                                 .then(data => {
                                     let stateDirectory = StateDirectory.fromJSON(that.fileManager, <StateDirectoryJSON>data);
                                     that.stateDirectory = stateDirectory;
