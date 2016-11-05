@@ -15,6 +15,7 @@ export class ViewInstance {
         viewInstance.component = json.component;
         viewInstance.state = json.state;
         viewInstance.paneType = json.paneType;
+        viewInstance.hideClose = !!json.hideClose;
         return viewInstance;
     }
 
@@ -27,6 +28,7 @@ export class ViewInstance {
     public state: Object;
     public activePak: ActivePak;
     public view: View;
+    public hideClose: boolean;
 
     private viewPromise: Promise<View>;
 
@@ -63,4 +65,5 @@ export interface ViewInstanceJSON {
     cmodule?: string;
     component?: string;
     state?: Object;
+    hideClose?: boolean;
 }
