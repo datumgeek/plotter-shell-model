@@ -51,6 +51,24 @@ You should include `umd.js` or `umd.min.js` from `dist/lib/` directory.
 <script src="[server public path]/plotter-shell-model/dist/lib/umd.min.js"></script>
 ```
 
+Build sequence
+-------------------
+
+1. run bash shell
+2. change to folder (example: `cd /c/a/p/plotter-shell-model`)
+3. `npm install`
+4. `npm run all`
+5. (author only) bump version in `package.json`
+6. (author only) `npm publish`
+
+Other related repos
+--------------------
+
+* [plotter-app-seed-angular2](https://github.com/datumgeek/plotter-app-seed-angular2)
+* [plotter-shell-angular2](https://github.com/datumgeek/plotter-shell-angular2)
+* [plotter-view-samples-angular2](https://github.com/datumgeek/plotter-view-samples-angular2)
+* [plotter-view-lab-angular2](https://github.com/datumgeek/plotter-view-lab-angular2)
+
 Contact
 --------------------
 
